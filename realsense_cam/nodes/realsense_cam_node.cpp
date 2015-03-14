@@ -100,7 +100,7 @@ public:
     ci->header.frame_id = img_.header.frame_id;
     ci->header.stamp = img_.header.stamp;
 
-    img_.encoding = "mono16";
+    img_.encoding = "16UC1";
 
     // publish the image
     image_pub_.publish(img_, *ci);
