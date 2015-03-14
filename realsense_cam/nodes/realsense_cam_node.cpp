@@ -18,9 +18,7 @@ public:
 
   // parameters
   std::string video_device_name_, io_method_name_, pixel_format_name_, camera_name_, camera_info_url_;
-  int image_width_, image_height_, framerate_, exposure_, brightness_, contrast_, saturation_, sharpness_, focus_,
-      white_balance_;
-  bool autofocus_, autoexposure_, auto_white_balance_;
+  int image_width_, image_height_, framerate_;
   boost::shared_ptr<camera_info_manager::CameraInfoManager> cinfo_;
 
   UsbCam cam_;
@@ -34,26 +32,13 @@ public:
 
     // grab the parameters
     node_.param("video_device", video_device_name_, std::string("/dev/video0"));
-    node_.param("brightness", brightness_, -1); //0-255, -1 "leave alone"
-    node_.param("contrast", contrast_, -1); //0-255, -1 "leave alone"
-    node_.param("saturation", saturation_, -1); //0-255, -1 "leave alone"
-    node_.param("sharpness", sharpness_, -1); //0-255, -1 "leave alone"
     // possible values: mmap, read, userptr
     node_.param("io_method", io_method_name_, std::string("mmap"));
     node_.param("image_width", image_width_, 640);
     node_.param("image_height", image_height_, 480);
     node_.param("framerate", framerate_, 30);
     // possible values: yuyv, uyvy, mjpeg, yuvmono10, rgb24
-    node_.param("pixel_format", pixel_format_name_, std::string("mjpeg"));
-    // enable/disable autofocus
-    node_.param("autofocus", autofocus_, false);
-    node_.param("focus", focus_, -1); //0-255, -1 "leave alone"
-    // enable/disable autoexposure
-    node_.param("autoexposure", autoexposure_, true);
-    node_.param("exposure", exposure_, 100);
-    // enable/disable auto white balance temperature
-    node_.param("auto_white_balance", auto_white_balance_, true);
-    node_.param("white_balance", white_balance_, 4000);
+    node_.param("pixel_format", pixel_format_name_, std::string("yuyv"));
 
     // load the camera info
     node_.param("camera_frame_id", img_.header.frame_id, std::string("head_camera"));
@@ -96,62 +81,6 @@ public:
     // start the camera
     cam_.start(video_device_name_.c_str(), io_method, pixel_format, image_width_,
 		     image_height_, framerate_);
-
-    // set camera parameters
-    if (brightness_ >= 0)
-    {
-      cam_.set_v4l_parameter("brightness", brightness_);
-    }
-
-    if (contrast_ >= 0)
-    {
-      cam_.set_v4l_parameter("contrast", contrast_);
-    }
-
-    if (saturation_ >= 0)
-    {
-      cam_.set_v4l_parameter("saturation", saturation_);
-    }
-
-    if (sharpness_ >= 0)
-    {
-      cam_.set_v4l_parameter("sharpness", sharpness_);
-    }
-
-    // check auto white balance
-    if (auto_white_balance_)
-    {
-      cam_.set_v4l_parameter("white_balance_temperature_auto", 1);
-    }
-    else
-    {
-      cam_.set_v4l_parameter("white_balance_temperature_auto", 0);
-      cam_.set_v4l_parameter("white_balance_temperature", white_balance_);
-    }
-
-    // check auto exposure
-    if (!autoexposure_)
-    {
-      // turn down exposure control (from max of 3)
-      cam_.set_v4l_parameter("exposure_auto", 1);
-      // change the exposure level
-      cam_.set_v4l_parameter("exposure_absolute", exposure_);
-    }
-
-    // check auto focus
-    if (autofocus_)
-    {
-      cam_.set_auto_focus(1);
-      cam_.set_v4l_parameter("focus_auto", 1);
-    }
-    else
-    {
-      cam_.set_v4l_parameter("focus_auto", 0);
-      if (focus_ >= 0)
-      {
-        cam_.set_v4l_parameter("focus_absolute", focus_);
-      }
-    }
   }
 
   virtual ~UsbCamNode()
