@@ -3,7 +3,9 @@ Panels:
     Help Height: 0
     Name: Displays
     Property Tree Widget:
-      Expanded: ~
+      Expanded:
+        - /Status1
+        - /PointCloud21
       Splitter Ratio: 0.5
     Tree Height: 255
   - Class: rviz/Selection
@@ -89,7 +91,7 @@ Visualization Manager:
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
-    Fixed Frame: map
+    Fixed Frame: world
     Frame Rate: 30
   Name: root
   Tools:
@@ -145,5 +147,5 @@ Window Geometry:
   Views:
     collapsed: false
   Width: 1788
-  X: 2043
+  X: 2036
   Y: 143

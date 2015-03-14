@@ -1,21 +1,28 @@
 <?xml version="1.0"?>
 
 <launch>
-  <!-- global names and parameters -->
+  <!-- Global names and parameters -->
   <arg name="ns" default="/realsense/depth"/>
   <arg name="output" default="screen"/>
+  <arg name="link" default="realsense_link"/>
 
-  <!-- start Rviz -->
+  <!-- Start Rviz -->
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(find realsense_cam)/launch/realsense_cam.rviz"/>
   <node pkg="realsense_cam" name="realsense_cam" type="realsense_cam_node" output="$(arg output)">
     <param name="video_device" value="/dev/video2"/>
     <param name="pixel_format" value="yuyv"/>
+    <param name="camera_frame_id" value="$(arg link)"/>
     <remap from="realsense_cam/image_raw" to="$(arg ns)/image_raw"/>
     <remap from="realsense_cam/camera_info" to="$(arg ns)/camera_info"/>
   </node>
 
   <!-- Set up a nodelet infrastructure -->
   <node pkg="nodelet" type="nodelet" args="manager" name="realsense_nodelet_manager" output="$(arg output)"/>
+  <node pkg="nodelet" type="nodelet" name="mm_to_metric"
+        args="load depth_image_proc/convert_metric realsense_nodelet_manager">
+    <remap from="image_raw" to="$(arg ns)/image_raw"/>
+    <remap from="image" to="$(arg ns)/image_raw_metric"/>
+  </node>
   <node pkg="nodelet" type="nodelet" name="depth_to_disparity"
         args="load depth_image_proc/disparity realsense_nodelet_manager">
     <param name="min_range" value="0.0"/>
@@ -34,4 +41,6 @@
     <remap from="points" to="$(arg ns)/points"/>
   </node>
 
+  <!-- Put static transform publisher (to view point cloud in Rviz) -->
+  <node pkg="tf" type="static_transform_publisher" name="realsense_static_tf" args="0 0 0 0 0 0 1 world $(arg link) 100"/>
 </launch>
