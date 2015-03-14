@@ -26,6 +26,13 @@ public:
   UsbCamNode() :
       node_("~")
   {
+
+    // specify settings for images and camera for Realsense camera
+    image_width_ = 640;
+    image_height_ = 480;
+    framerate_ = 30;
+    pixel_format_name_ = "yuyv";
+
     // advertise the main image topic
     image_transport::ImageTransport it(node_);
     image_pub_ = it.advertiseCamera("image_raw", 1);
@@ -34,15 +41,10 @@ public:
     node_.param("video_device", video_device_name_, std::string("/dev/video0"));
     // possible values: mmap, read, userptr
     node_.param("io_method", io_method_name_, std::string("mmap"));
-    node_.param("image_width", image_width_, 640);
-    node_.param("image_height", image_height_, 480);
-    node_.param("framerate", framerate_, 30);
-    // possible values: yuyv, uyvy, mjpeg, yuvmono10, rgb24
-    node_.param("pixel_format", pixel_format_name_, std::string("yuyv"));
 
     // load the camera info
-    node_.param("camera_frame_id", img_.header.frame_id, std::string("head_camera"));
-    node_.param("camera_name", camera_name_, std::string("head_camera"));
+    node_.param("camera_frame_id", img_.header.frame_id, std::string("realsense_camera"));
+    node_.param("camera_name", camera_name_, std::string("realsense_camera"));
     node_.param("camera_info_url", camera_info_url_, std::string(""));
     cinfo_.reset(new camera_info_manager::CameraInfoManager(node_, camera_name_, camera_info_url_));
     // check for default camera info
@@ -112,7 +114,7 @@ public:
     while (node_.ok())
     {
       if (!take_and_send_image())
-        ROS_WARN("USB camera did not respond in time.");
+        ROS_WARN("Realsense camera did not respond in time.");
       ros::spinOnce();
       loop_rate.sleep();
     }
@@ -124,7 +126,7 @@ public:
 
 int main(int argc, char **argv)
 {
-  ros::init(argc, argv, "usb_cam");
+  ros::init(argc, argv, "realsense_cam");
   usb_cam::UsbCamNode a;
   a.spin();
   return EXIT_SUCCESS;
