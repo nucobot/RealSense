@@ -1,0 +1,29 @@
+<package>
+  <name>realsense_cam</name>
+  <version>0.1.0</version>
+  <description>A ROS Driver for Realsense camera</description>
+
+  <maintainer email="vsevolod.livinskij@frtk.ru">Vsevolod Livinskij</maintainer>
+  <author email="vsevolod.livinskij@frtk.ru">Vsevolod Livinskij</author>
+  <author email="benjamin.pitzer@bosch.com">Benjamin Pitzer</author>
+
+  <!-- This package is based on ROS usb_cam node -->
+  <license>MIT</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>image_transport</build_depend> 
+  <build_depend>roscpp</build_depend> 
+  <build_depend>std_msgs</build_depend> 
+  <build_depend>sensor_msgs</build_depend> 
+  <build_depend>ffmpeg</build_depend>
+  <build_depend>camera_info_manager</build_depend>
+
+  <run_depend>image_transport</run_depend> 
+  <run_depend>roscpp</run_depend> 
+  <run_depend>std_msgs</run_depend> 
+  <run_depend>sensor_msgs</run_depend> 
+  <run_depend>ffmpeg</run_depend>
+  <run_depend>camera_info_manager</run_depend>
+  <run_depend>v4l-utils</run_depend>
+</package>

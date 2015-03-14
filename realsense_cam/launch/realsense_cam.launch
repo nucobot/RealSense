@@ -1,0 +1,6 @@
+<launch>
+	<node pkg="realsense_cam" name="realsense_cam" type="realsense_cam_node" output="screen">
+		<param name="video_device" value="/dev/video1"/>
+		<param name="pixel_format" value="yuyv"/>
+	</node>
+</launch>
