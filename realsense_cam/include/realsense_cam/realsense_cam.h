@@ -31,17 +31,11 @@ class UsbCam {
     IO_METHOD_READ, IO_METHOD_MMAP, IO_METHOD_USERPTR, IO_METHOD_UNKNOWN,
   } io_method;
 
-  typedef enum
-  {
-    PIXEL_FORMAT_YUYV, PIXEL_FORMAT_UYVY, PIXEL_FORMAT_MJPEG, PIXEL_FORMAT_YUVMONO10, PIXEL_FORMAT_RGB24, PIXEL_FORMAT_UNKNOWN
-  } pixel_format;
-
   UsbCam();
   ~UsbCam();
 
   // start camera
-  void start(const std::string& dev, io_method io, pixel_format pf,
-		    int image_width, int image_height, int framerate);
+  void start(const std::string& dev, io_method io, int image_width, int image_height, int framerate);
   // shutdown camera
   void shutdown(void);
 
@@ -56,7 +50,6 @@ class UsbCam {
   void set_v4l_parameter(const std::string& param, const std::string& value);
 
   static io_method io_method_from_string(const std::string& str);
-  static pixel_format pixel_format_from_string(const std::string& str);
 
  private:
   typedef struct
@@ -93,8 +86,6 @@ class UsbCam {
 
 
   std::string camera_dev_;
-  unsigned int pixelformat_;
-  bool monochrome_;
   io_method io_;
   int fd_;
   buffer * buffers_;

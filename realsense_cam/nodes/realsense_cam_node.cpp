@@ -17,7 +17,7 @@ public:
   image_transport::CameraPublisher image_pub_;
 
   // parameters
-  std::string video_device_name_, io_method_name_, pixel_format_name_, camera_name_, camera_info_url_;
+  std::string video_device_name_, io_method_name_, camera_name_, camera_info_url_;
   int image_width_, image_height_, framerate_;
   boost::shared_ptr<camera_info_manager::CameraInfoManager> cinfo_;
 
@@ -31,7 +31,6 @@ public:
     image_width_ = 640;
     image_height_ = 480;
     framerate_ = 30;
-    pixel_format_name_ = "yuyv";
 
     // advertise the main image topic
     image_transport::ImageTransport it(node_);
@@ -59,8 +58,8 @@ public:
     }
 
 
-    ROS_INFO("Starting '%s' (%s) at %dx%d via %s (%s) at %i FPS", camera_name_.c_str(), video_device_name_.c_str(),
-        image_width_, image_height_, io_method_name_.c_str(), pixel_format_name_.c_str(), framerate_);
+    ROS_INFO("Starting '%s' (%s) at %dx%d via %s at %i FPS", camera_name_.c_str(), video_device_name_.c_str(),
+        image_width_, image_height_, io_method_name_.c_str(), framerate_);
 
     // set the IO method
     UsbCam::io_method io_method = UsbCam::io_method_from_string(io_method_name_);
@@ -71,18 +70,8 @@ public:
       return;
     }
 
-    // set the pixel format
-    UsbCam::pixel_format pixel_format = UsbCam::pixel_format_from_string(pixel_format_name_);
-    if (pixel_format == UsbCam::PIXEL_FORMAT_UNKNOWN)
-    {
-      ROS_FATAL("Unknown pixel format '%s'", pixel_format_name_.c_str());
-      node_.shutdown();
-      return;
-    }
-
     // start the camera
-    cam_.start(video_device_name_.c_str(), io_method, pixel_format, image_width_,
-		     image_height_, framerate_);
+    cam_.start(video_device_name_.c_str(), io_method, image_width_, image_height_, framerate_);
   }
 
   virtual ~UsbCamNode()
