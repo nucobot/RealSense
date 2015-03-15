@@ -4,7 +4,9 @@
   <description>A ROS Driver for Realsense camera</description>
 
   <maintainer email="vsevolod.livinskij@frtk.ru">Vsevolod Livinskij</maintainer>
+  <maintainer email="anton.mitrokhin@phystech.edu">Anton Mitrokhin</maintainer>
   <author email="vsevolod.livinskij@frtk.ru">Vsevolod Livinskij</author>
+  <author email="anton.mitrokhin@phystech.edu">Anton Mitrokhin</author>
   <author email="benjamin.pitzer@bosch.com">Benjamin Pitzer</author>
 
   <!-- This package is based on ROS usb_cam node -->

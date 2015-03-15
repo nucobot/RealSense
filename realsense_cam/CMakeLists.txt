@@ -52,17 +52,3 @@ target_link_libraries(${PROJECT_NAME}_node
   ${catkin_LIBRARIES}
 )
 
-#############
-## Install ##
-#############
-
-## Mark executables and/or libraries for installation
-#install(TARGETS ${PROJECT_NAME}_node ${PROJECT_NAME}
-#  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-#  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-#)
-
-#install(DIRECTORY include/${PROJECT_NAME}/
-#   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
-#   FILES_MATCHING PATTERN "*.h" PATTERN "*.hpp"
-#)
