@@ -4,7 +4,8 @@
   <!-- Global names and parameters -->
   <arg name="ns" default="/realsense"/>
   <arg name="output" default="screen"/>
-  <arg name="link" default="realsense_link"/>
+  <arg name="base_link" default="world"/>
+  <arg name="link_prefix" default="realsense"/>
   <arg name="rgb_device" default="/dev/video1"/>
   <arg name="depth_device" default="/dev/video2"/>
 
@@ -14,7 +15,7 @@
   <node pkg="realsense_cam" name="realsense_depth_cam" type="realsense_cam_node" output="$(arg output)">
     <param name="video_device" value="$(arg depth_device)"/>
     <param name="camera_name" value="realsense_depth_camera"/>
-    <param name="camera_frame_id" value="$(arg link)"/>
+    <param name="camera_frame_id" value="$(arg link_prefix)_depth_optical_frame"/>
     <param name="camera_info_url" value="package://realsense_cam/calibration/realsense_depth_calibration.yaml"/>
     <remap from="~/image_raw" to="$(arg ns)/depth/image_raw"/>
     <remap from="~/camera_info" to="$(arg ns)/depth/camera_info"/>
@@ -23,7 +24,7 @@
   <node pkg="usb_cam" name="realsense_rgb_cam" type="usb_cam_node" output="$(arg output)">
     <param name="video_device" value="$(arg rgb_device)"/>
     <param name="camera_name" value="realsense_rgb_camera"/>
-    <param name="camera_frame_id" value="$(arg link)"/>
+    <param name="camera_frame_id" value="$(arg link_prefix)_rgb_optical_frame"/>
     <param name="pixel_format" value="yuyv"/>
     <param name="camera_info_url" value="package://realsense_cam/calibration/realsense_rgb_calibration.yaml"/>
     <remap from="~/image_raw" to="$(arg ns)/rgb/image_raw"/>
@@ -51,5 +52,9 @@
   </node>
 
   <!-- Put static transform publisher (to view point cloud in Rviz) -->
-  <node pkg="tf" type="static_transform_publisher" name="realsense_static_tf" args="0 0 0 0 0 0 1 world $(arg link) 50"/>
+  <node pkg="tf" type="static_transform_publisher" name="realsense_static_tf_$(arg link_prefix)_link" args="0 0 0.018 0 -0.2 0 $(arg base_link) $(arg link_prefix)_link 50"/>
+  <node pkg="tf" type="static_transform_publisher" name="realsense_static_tf_$(arg link_prefix)_df" args="0 -0.023 0 0 0 0 1 $(arg link_prefix)_link $(arg link_prefix)_depth_frame 50"/>
+  <node pkg="tf" type="static_transform_publisher" name="realsense_static_tf_$(arg link_prefix)_rf" args="0 0 0 0 0 0 1 $(arg link_prefix)_link $(arg link_prefix)_rgb_frame 50"/>
+  <node pkg="tf" type="static_transform_publisher" name="realsense_static_tf_$(arg link_prefix)_dof" args="0 0 0 -0.5 0.5 -0.5 0.5 $(arg link_prefix)_depth_frame $(arg link_prefix)_depth_optical_frame 50"/>
+  <node pkg="tf" type="static_transform_publisher" name="realsense_static_tf_$(arg link_prefix)_rof" args="0 0 0 -0.5 0.5 -0.5 0.5 $(arg link_prefix)_rgb_frame $(arg link_prefix)_rgb_optical_frame 50"/>
 </launch>

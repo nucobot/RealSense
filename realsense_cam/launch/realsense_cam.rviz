@@ -28,6 +28,39 @@ Panels:
 Visualization Manager:
   Class: ""
   Displays:
+    - Class: rviz/TF
+      Enabled: true
+      Frame Timeout: 15
+      Frames:
+        All Enabled: true
+        realsense_depth_frame:
+          Value: true
+        realsense_depth_optical_frame:
+          Value: true
+        realsense_link:
+          Value: true
+        realsense_rgb_frame:
+          Value: true
+        realsense_rgb_optical_frame:
+          Value: true
+        world:
+          Value: true
+      Marker Scale: 0.01
+      Name: TF
+      Show Arrows: true
+      Show Axes: true
+      Show Names: true
+      Tree:
+        world:
+          realsense_link:
+            realsense_depth_frame:
+              realsense_depth_optical_frame:
+                {}
+            realsense_rgb_frame:
+              realsense_rgb_optical_frame:
+                {}
+      Update Interval: 0
+      Value: true
     - Alpha: 0.5
       Cell Size: 1
       Class: rviz/Grid
@@ -49,14 +82,14 @@ Visualization Manager:
     - Alpha: 1
       Autocompute Intensity Bounds: true
       Autocompute Value Bounds:
-        Max Value: 10
-        Min Value: -10
+        Max Value: 0.780419
+        Min Value: 0.0787758
         Value: true
-      Axis: Z
+      Axis: X
       Channel Name: intensity
       Class: rviz/PointCloud2
       Color: 255; 255; 255
-      Color Transformer: Intensity
+      Color Transformer: AxisColor
       Decay Time: 0
       Enabled: true
       Invert Rainbow: false
@@ -70,7 +103,7 @@ Visualization Manager:
       Selectable: true
       Size (Pixels): 3
       Size (m): 0.001
-      Style: Boxes
+      Style: Flat Squares
       Topic: /realsense/depth/points
       Use Fixed Frame: true
       Use rainbow: true
@@ -88,6 +121,7 @@ Visualization Manager:
         Grid: true
         RGB: true
         RealSense Pointcloud: true
+        TF: true
         Value: false
       Zoom Factor: 1
     - Class: rviz/Camera
@@ -103,12 +137,13 @@ Visualization Manager:
         Depth: true
         Grid: true
         RealSense Pointcloud: true
+        TF: true
         Value: true
       Zoom Factor: 1
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
-    Fixed Frame: realsense_link
+    Fixed Frame: world
     Frame Rate: 30
   Name: root
   Tools:
@@ -129,22 +164,22 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 2.19538
+      Distance: 1.22215
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.06
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 0
-        Y: 0
-        Z: 0
+        X: 0.0732666
+        Y: -0.0589955
+        Z: 0.195324
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 1.3748
+      Pitch: 0.4798
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 1.0554
+      Yaw: 2.2154
     Saved: ~
 Window Geometry:
   Depth:
@@ -166,5 +201,5 @@ Window Geometry:
   Views:
     collapsed: false
   Width: 1788
-  X: 2001
+  X: 1973
   Y: 143
