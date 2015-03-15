@@ -12,6 +12,7 @@
     <param name="video_device" value="/dev/video2"/>
     <param name="pixel_format" value="yuyv"/>
     <param name="camera_frame_id" value="$(arg link)"/>
+    <param name="camera_info_url" value="package://realsense_cam/calibration/realsense_calibration.yaml"/>
     <remap from="realsense_cam/image_raw" to="$(arg ns)/image_raw"/>
     <remap from="realsense_cam/camera_info" to="$(arg ns)/camera_info"/>
   </node>

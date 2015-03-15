@@ -297,26 +297,18 @@ static void yuyv2rgb(char *YUV, char *RGB, int NumPixels)
 
   for (i = 0; i < (NumPixels << 1); i += 4)
   {
-    
     y0 = (unsigned char)YUV[i + 0];
     u = (unsigned char)YUV[i + 1];
     y1 = (unsigned char)YUV[i + 2];
     v = (unsigned char)YUV[i + 3];
-    /*
-    YUV2RGB(y0, u, v, &r, &g, &b);
-    RGB[j + 0] = r;
-    RGB[j + 1] = g;
-    RGB[j + 2] = b;
-    YUV2RGB(y1, u, v, &r, &g, &b);
-    RGB[j + 3] = r;
-    RGB[j + 4] = g;
-    RGB[j + 5] = b;
-    */
+
     RGB[i + 0] = y0;
     RGB[i + 1] = u;
     RGB[i + 2] = y1;
     RGB[i + 3] = v;
     
+    *((unsigned short*)(&RGB[i + 0])) /= 32;
+    *((unsigned short*)(&RGB[i + 2])) /= 32;
   }
 }
 

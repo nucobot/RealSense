@@ -59,8 +59,8 @@ public:
     }
 
 
-    ROS_INFO("Starting '%s' (%s) at %dx%d via %s (%s) at %i FPS", camera_name_.c_str(), video_device_name_.c_str(),
-        image_width_, image_height_, io_method_name_.c_str(), pixel_format_name_.c_str(), framerate_);
+    ROS_INFO("Starting '%s' (%s) at %dx%d, %i FPS", camera_name_.c_str(), video_device_name_.c_str(),
+        image_width_, image_height_, framerate_);
 
     // set the IO method
     UsbCam::io_method io_method = UsbCam::io_method_from_string(io_method_name_);
