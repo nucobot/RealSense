@@ -38,18 +38,18 @@
     <param name="max_range" value="2.0"/>
     <param name="delta_d" value="0.125"/>
     <param name="queue_size" value="5"/>
-    <remap from="left/image_rect" to="$(arg ns)/image_raw"/>
-    <remap from="right/camera_info" to="$(arg ns)/camera_info"/>
-    <remap from="left/disparity" to="$(arg ns)/disparity"/>
+    <remap from="left/image_rect" to="$(arg ns)/depth/image_raw"/>
+    <remap from="right/camera_info" to="$(arg ns)/depth/camera_info"/>
+    <remap from="left/disparity" to="$(arg ns)/depth/disparity"/>
   </node>
   <node pkg="nodelet" type="nodelet" name="depth_to_pointcloud"
         args="load depth_image_proc/point_cloud_xyz realsense_nodelet_manager">
     <param name="queue_size" value="5"/>
-    <remap from="image_rect" to="$(arg ns)/image_raw"/>
-    <remap from="camera_info" to="$(arg ns)/camera_info"/>
-    <remap from="points" to="$(arg ns)/points"/>
+    <remap from="image_rect" to="$(arg ns)/depth/image_raw"/>
+    <remap from="camera_info" to="$(arg ns)/depth/camera_info"/>
+    <remap from="points" to="$(arg ns)/depth/points"/>
   </node>
 
   <!-- Put static transform publisher (to view point cloud in Rviz) -->
-  <node pkg="tf" type="static_transform_publisher" name="realsense_static_tf" args="0 0 0 0 0 0 1 world $(arg link) 100"/>
+  <node pkg="tf" type="static_transform_publisher" name="realsense_static_tf" args="0 0 0 0 0 0 1 world $(arg link) 50"/>
 </launch>
