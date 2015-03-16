@@ -68,6 +68,25 @@
     <remap from="camera_info" to="$(arg ns)/depth/camera_info"/>
     <remap from="points" to="$(arg ns)/depth/points"/>
   </node>
+  <!-- Publish registered depthmap -->
+  <node pkg="nodelet" type="nodelet" name="realsense_depth_to_depthreg"
+        args="load depth_image_proc/register realsense_nodelet_manager">
+    <param name="queue_size" value="5"/>
+    <remap from="rgb/camera_info" to="$(arg ns)/rgb/camera_info"/>
+    <remap from="depth/camera_info" to="$(arg ns)/depth/camera_info"/>
+    <remap from="depth/image_rect" to="$(arg ns)/depth/image_rect"/>
+    <remap from="depth_registered/camera_info" to="$(arg ns)/depth_registered/camera_info"/>
+    <remap from="depth_registered/image_rect" to="$(arg ns)/depth_registered/image_rect"/>
+  </node>
+  <!-- Publish registered pointcloud (colored) -->
+  <node pkg="nodelet" type="nodelet" name="realsense_depth_to_xyzrgb"
+        args="load depth_image_proc/point_cloud_xyzrgb realsense_nodelet_manager">
+    <param name="queue_size" value="5"/>
+    <remap from="rgb/camera_info" to="$(arg ns)/rgb/camera_info"/>
+    <remap from="rgb/image_rect_color" to="$(arg ns)/rgb/image_rect"/>
+    <remap from="depth_registered/image_rect" to="$(arg ns)/depth_registered/image_rect"/>
+    <remap from="depth_registered/points" to="$(arg ns)/depth_registered/points"/>
+  </node>
 
   <!-- Put static transform publisher (to view point cloud in Rviz) -->
   <node pkg="tf" type="static_transform_publisher" name="realsense_static_tf_$(arg link_prefix)_link" args="0 0 0.018 0 -0.2 0 $(arg base_link) $(arg link_prefix)_link 50"/>

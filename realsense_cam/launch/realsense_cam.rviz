@@ -82,9 +82,9 @@ Visualization Manager:
     - Alpha: 1
       Autocompute Intensity Bounds: true
       Autocompute Value Bounds:
-        Max Value: 1.17156
-        Min Value: 0.112583
-        Value: true
+        Max Value: 0.977485
+        Min Value: 0.112491
+        Value: false
       Axis: X
       Channel Name: intensity
       Class: rviz/PointCloud2
@@ -100,11 +100,11 @@ Visualization Manager:
       Name: RealSense Pointcloud
       Position Transformer: XYZ
       Queue Size: 10
-      Selectable: true
+      Selectable: false
       Size (Pixels): 3
       Size (m): 0.001
-      Style: Flat Squares
-      Topic: /realsense/depth/points
+      Style: Points
+      Topic: /realsense/depth_registered/points
       Use Fixed Frame: true
       Use rainbow: true
       Value: true
@@ -164,22 +164,22 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 1.22215
+      Distance: 1.8932
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.06
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 0.0732666
-        Y: -0.0589955
-        Z: 0.195324
+        X: 0.254881
+        Y: -0.0235219
+        Z: 0.227088
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 0.4798
+      Pitch: 0.404799
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 2.2154
+      Yaw: 3.0404
     Saved: ~
 Window Geometry:
   Depth:
@@ -201,5 +201,5 @@ Window Geometry:
   Views:
     collapsed: false
   Width: 1788
-  X: 1966
+  X: 1959
   Y: 143
