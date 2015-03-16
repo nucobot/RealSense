@@ -32,21 +32,39 @@
   </node>
 
   <!-- Set up a nodelet infrastructure -->
-  <node pkg="nodelet" type="nodelet" args="manager" name="realsense_nodelet_manager" output="$(arg output)"/> 
-  <node pkg="nodelet" type="nodelet" name="depth_to_disparity"
+  <node pkg="nodelet" type="nodelet" args="manager" name="realsense_nodelet_manager" output="$(arg output)"/>
+  <!-- Rectify color and depth images -->
+  <node pkg="nodelet" type="nodelet" name="realsense_depth_rectify"
+        args="load image_proc/rectify realsense_nodelet_manager">
+    <param name="queue_size" value="5"/>
+    <remap from="image_mono" to="$(arg ns)/depth/image_raw"/>
+    <remap from="camera_info" to="$(arg ns)/depth/camera_info"/>
+    <remap from="image_rect" to="$(arg ns)/depth/image_rect"/>
+  </node>
+  <node pkg="nodelet" type="nodelet" name="realsense_rgb_rectify"
+        args="load image_proc/rectify realsense_nodelet_manager">
+    <param name="queue_size" value="5"/>
+    <remap from="image_mono" to="$(arg ns)/rgb/image_raw"/>
+    <remap from="camera_info" to="$(arg ns)/rgb/camera_info"/>
+    <remap from="image_rect" to="$(arg ns)/rgb/image_rect"/>
+  </node>
+
+  <!-- Publish disparity image -->
+  <node pkg="nodelet" type="nodelet" name="realsense_depth_to_disparity"
         args="load depth_image_proc/disparity realsense_nodelet_manager">
     <param name="min_range" value="0.0"/>
     <param name="max_range" value="2.0"/>
     <param name="delta_d" value="0.125"/>
     <param name="queue_size" value="5"/>
-    <remap from="left/image_rect" to="$(arg ns)/depth/image_raw"/>
+    <remap from="left/image_rect" to="$(arg ns)/depth/image_rect"/>
     <remap from="right/camera_info" to="$(arg ns)/depth/camera_info"/>
     <remap from="left/disparity" to="$(arg ns)/depth/disparity"/>
   </node>
-  <node pkg="nodelet" type="nodelet" name="depth_to_pointcloud"
+  <!-- Publish pointcloud -->
+  <node pkg="nodelet" type="nodelet" name="realsense_depth_to_pointcloud"
         args="load depth_image_proc/point_cloud_xyz realsense_nodelet_manager">
     <param name="queue_size" value="5"/>
-    <remap from="image_rect" to="$(arg ns)/depth/image_raw"/>
+    <remap from="image_rect" to="$(arg ns)/depth/image_rect"/>
     <remap from="camera_info" to="$(arg ns)/depth/camera_info"/>
     <remap from="points" to="$(arg ns)/depth/points"/>
   </node>

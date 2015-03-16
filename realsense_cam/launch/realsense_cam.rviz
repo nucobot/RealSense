@@ -82,8 +82,8 @@ Visualization Manager:
     - Alpha: 1
       Autocompute Intensity Bounds: true
       Autocompute Value Bounds:
-        Max Value: 0.780419
-        Min Value: 0.0787758
+        Max Value: 1.17156
+        Min Value: 0.112583
         Value: true
       Axis: X
       Channel Name: intensity
@@ -111,7 +111,7 @@ Visualization Manager:
     - Class: rviz/Camera
       Enabled: true
       Image Rendering: background and overlay
-      Image Topic: /realsense/depth/image_raw
+      Image Topic: /realsense/depth/image_rect
       Name: Depth
       Overlay Alpha: 0.5
       Queue Size: 2
@@ -127,7 +127,7 @@ Visualization Manager:
     - Class: rviz/Camera
       Enabled: true
       Image Rendering: background and overlay
-      Image Topic: /realsense/rgb/image_raw
+      Image Topic: /realsense/rgb/image_rect
       Name: RGB
       Overlay Alpha: 0.5
       Queue Size: 2
@@ -201,5 +201,5 @@ Window Geometry:
   Views:
     collapsed: false
   Width: 1788
-  X: 1973
+  X: 1966
   Y: 143
