@@ -3,7 +3,10 @@ ROS driver for RealSense depth camera
 
 ## Overview
 This code is based on ROS [usb_cam](http://wiki.ros.org/usb_cam) node, which code was adapted to communicte with Intel
-RealSense RGB-D camera. This code was tested on [ROS Hydro](http://wiki.ros.org/hydro), Ubuntu 12.04, but might work with other configurations s well. 
+RealSense RGB-D camera. This code was tested on
+- [ROS Hydro](http://wiki.ros.org/hydro), Ubuntu 12.04
+- [ROS Jade](http://wiki.ros.org/jade), Ubuntu 15.04
+  but might work with other configurations s well. 
 The node *realsense_cam_node* provides you with following 
 - Topics:
   + *~/image_raw* - published depth image in **16UC1** format, millimetres (unsigned int)
@@ -23,6 +26,7 @@ The node *realsense_cam_node* provides you with following
     concepts")
 3. It might be necessary to install some additional libraries to successfully compile the code. I'll maybe write about this one day,
 but at the moment you have to look at the compiler errors and set everything up yourself, sorry ;)
+No further libraries were required on Ubuntu 15.04 with [sudo apt-get install ros-jade-desktop-full](http://wiki.ros.org/jade/Installation/Ubuntu)
 4. After you have created [catkin workspace](http://wiki.ros.org/catkin/Tutorials/create_a_workspace) simply copy
 downloaded (or directly checkout from the repo) *realsense_cam* package in your *src* folder and *catkin_make* it:
 ```
@@ -42,3 +46,4 @@ like `/dev/video<n>`, where *n* is some number. Run `ls /dev | grep video` to se
 ```
 2. Run the launch file:
 `roslaunch realsense_cam realsense_cam.launch`
+3. If the camera crashes after a few seconds, ensure that the USB port supplies enough current.
